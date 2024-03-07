@@ -1,18 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query'
 import { fetchPokemonByName, fetchPokemonGeneration, fetchPokemonList } from '../apis/pokemon.ts'
 import {Link, useParams} from 'react-router-dom'
 import { Pokemon } from '../../models/pokemon.ts'
+import IndividualPokemon from "./IndividualPokemon.tsx";
 
 export default function PokemonGame () {
     // const name = 'pidgey'
 
+    const [indexes, setIndexes] = useState(null as null | [number, number])
+
     const { data: pokemonlist, isPending, isError} = useQuery({
-        queryKey: ['pokemon'],
+        queryKey: ['pokemonlist'],
         queryFn: () => fetchPokemonList()
     }) 
 
-    if (isPending) {
+    useEffect(() => {
+        if (pokemonlist === undefined){
+            return
+        }
+        const first = Math.floor(Math.random()*pokemonlist.results.length)
+        const second = Math.floor(Math.random()*pokemonlist.results.length)
+        setIndexes([first, second])
+    }, [pokemonlist])
+
+    if (isPending || indexes === null) {
         return <p>Loading...</p>
     }
 
@@ -22,15 +34,11 @@ export default function PokemonGame () {
     
     const pokemonArray = pokemonlist.results.map((pokemon) => pokemon.name)
 
-    
-    // console.log(pokemonlist.results)
-    console.log(pokemonArray,"😁😁😁")
-    
-    
+   
     return(
         <>
-            <h1>🐸🐸</h1>
-            
+            <IndividualPokemon pokemonName={pokemonArray[indexes[0]]}/>
+            <IndividualPokemon pokemonName={pokemonArray[indexes[1]]}/>
         </>
 
         

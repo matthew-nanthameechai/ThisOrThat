@@ -17,7 +17,7 @@ export interface Name {
   language: MainGeneration
   name: string
 }
-export interface PokemonImages {
+export interface SearchResult {
   count: number
   next: string
   previous: null
