@@ -5,11 +5,15 @@ import {
   Route,
 } from 'react-router-dom'
 import App from './components/App'
+import ThisorThat from './components/ThisorThat'
+
 
 const router = createBrowserRouter(
-  createRoutesFromElements([
-    <Route path="/" element={<App />} />
-  ])
+  createRoutesFromElements(
+    <Route path = "/" element ={<App/>}>
+      <Route path = "/game/:name" element = {<ThisorThat/>}/>
+    </Route>
+  )
 )
 
 export default router
