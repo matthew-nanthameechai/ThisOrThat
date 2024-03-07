@@ -10,7 +10,13 @@ export async function fetchPokemonGeneration(generation: number) {
 }
 
 export async function fetchPokemonByName(name: string) {
+  
   const res = await request.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
   return res.body as Pokemon
 }
 
+export async function fetchPokemonList() {
+  
+  const res = await request.get(`https://pokeapi.co/api/v2/pokemon`)
+  return res.body as Pokemon
+}

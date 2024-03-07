@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { useQuery } from '@tanstack/react-query'
-import { fetchPokemonByName, fetchPokemonGeneration } from '../apis/pokemon.ts'
+import { fetchPokemonByName, fetchPokemonGeneration, fetchPokemonList } from '../apis/pokemon.ts'
 import {Link, useParams} from 'react-router-dom'
 import { Pokemon } from '../../models/pokemon.ts'
 
 export default function PokemonGame () {
-    const name = 'pidgey'
-    // const { name } = useParams()
+    // const name = 'pidgey'
 
-    const { data: pokemon, isPending, isError} = useQuery({
-        queryKey: ['pokemon', name],
-        queryFn: () => fetchPokemonByName(name)
+    const { data: pokemonlist, isPending, isError} = useQuery({
+        queryKey: ['pokemon'],
+        queryFn: () => fetchPokemonList()
     }) 
 
     if (isPending) {
@@ -20,9 +19,21 @@ export default function PokemonGame () {
     if (isError) {
         return <p>An error occured!</p>
     }
-    console.log(pokemon)
+    
+    const pokemonArray = pokemonlist.results.map((pokemon) => pokemon.name)
+
+    
+    // console.log(pokemonlist.results)
+    console.log(pokemonArray,"😁😁😁")
+    
+    
     return(
-        <h1>🐸🐸{name}</h1>
+        <>
+            <h1>🐸🐸</h1>
+            
+        </>
+
+        
     )
 }
 
