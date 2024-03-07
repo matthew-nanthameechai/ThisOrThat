@@ -1,8 +1,11 @@
+import Nav from './Nav.tsx'
+import ThisorThat from './ThisorThat.tsx'
+
 function App() {
   return (
     <div>
-      <h1>App</h1>
-      <p>React development has begun!</p>
+      <Nav />
+      <ThisorThat />
     </div>
   )
 }
