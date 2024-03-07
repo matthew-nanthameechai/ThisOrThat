@@ -9,9 +9,17 @@ export default function PokemonGame () {
     // const { name } = useParams()
 
     const { data: pokemon, isPending, isError} = useQuery({
-        queryKey: ['pokemon'],
+        queryKey: ['pokemon', name],
         queryFn: () => fetchPokemonByName(name)
     }) 
+
+    if (isPending) {
+        return <p>Loading...</p>
+    }
+
+    if (isError) {
+        return <p>An error occured!</p>
+    }
     console.log(pokemon)
     return(
         <h1>🐸🐸{name}</h1>
