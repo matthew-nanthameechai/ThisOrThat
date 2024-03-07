@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom'
+import PokemonGame from './PokemonGame'
+
 function ThisorThat() {
   return (
     <>
