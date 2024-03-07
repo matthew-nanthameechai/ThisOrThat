@@ -5,8 +5,17 @@ import {Link, useParams} from 'react-router-dom'
 import { Pokemon } from '../../models/pokemon.ts'
 
 export default function PokemonGame () {
-    const { data: isPending, isError} = useQuery
-    
+    const name = 'pidgey'
+    // const { name } = useParams()
+
+    const { data: pokemon, isPending, isError} = useQuery({
+        queryKey: ['pokemon'],
+        queryFn: () => fetchPokemonByName(name)
+    }) 
+    console.log(pokemon)
+    return(
+        <h1>🐸🐸{name}</h1>
+    )
 }
 
 
