@@ -1,11 +1,11 @@
+import { Outlet } from 'react-router-dom'
 import Nav from './Nav.tsx'
-import ThisorThat from './ThisorThat.tsx'
 
 function App() {
   return (
     <div>
       <Nav />
-      <ThisorThat />
+      <Outlet />
     </div>
   )
 }
