@@ -85,6 +85,7 @@ input:hover {
   display: flex;
   justify-content: center;
   border-radius: 50%;
+  height: 45;
 }
 
 .pokemonContainer {
