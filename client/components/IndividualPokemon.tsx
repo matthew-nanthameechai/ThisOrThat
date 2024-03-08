@@ -23,7 +23,7 @@ export default function IndividualPokemon({pokemonName}: Props) {
     if (isError) {
         return <p>An error occured!</p>
     }
-    console.log(pokemon.sprites.front_default)
+    
     return (
         <>
         <img src = {pokemon.sprites.front_default} alt={pokemonName}/>

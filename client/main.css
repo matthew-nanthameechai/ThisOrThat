@@ -70,3 +70,25 @@ input:hover {
 .header a:hover {
   color: chartreuse;
 }
+
+.left {
+  background-color: lightblue;
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.right {
+  background-color: lightgray;
+  width: 40vw;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.pokemonContainer {
+  /* background-color: lightcoral; */
+  display: flex;
+  justify-content: space-between;
+}

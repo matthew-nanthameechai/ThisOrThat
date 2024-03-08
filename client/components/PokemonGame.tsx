@@ -1,60 +1,83 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { fetchPokemonByName, fetchPokemonGeneration, fetchPokemonList } from '../apis/pokemon.ts'
-import {Link, useParams} from 'react-router-dom'
+import {
+  fetchPokemonByName,
+  fetchPokemonGeneration,
+  fetchPokemonList,
+} from '../apis/pokemon.ts'
+import { Link, useParams } from 'react-router-dom'
 import { Pokemon } from '../../models/pokemon.ts'
-import IndividualPokemon from "./IndividualPokemon.tsx";
+import IndividualPokemon from './IndividualPokemon.tsx'
+import { get } from 'http'
 
-export default function PokemonGame () {
-    // const name = 'pidgey'
+export default function PokemonGame() {
+  // const name = 'pidgey'
+  const [left, setLeft] = useState<number[]>([0])
+  const [right, setRight] = useState<number[]>([0])
+  // const [indexes, setIndexes] = useState(null as null | [number, number])
 
-    const [indexes, setIndexes] = useState(null as null | [number, number])
+  const {
+    data: pokemonlist,
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ['pokemonlist'],
+    queryFn: () => fetchPokemonList(),
+  })
 
-    const { data: pokemonlist, isPending, isError} = useQuery({
-        queryKey: ['pokemonlist'],
-        queryFn: () => fetchPokemonList()
-    }) 
-
-    useEffect(() => {
-        if (pokemonlist === undefined){
-            return
-        }
-        const first = Math.floor(Math.random()*pokemonlist.results.length)
-        const second = Math.floor(Math.random()*pokemonlist.results.length)
-        setIndexes([first, second])
-    }, [pokemonlist])
-
-    if (isPending || indexes === null) {
-        return <p>Loading...</p>
+  useEffect(() => {
+    if (pokemonlist === undefined) {
+      return
     }
+    const left: Array<number> = [
+      Math.floor(Math.random() * pokemonlist.results.length),
+    ]
+    const right: Array<number> = [
+      Math.floor(Math.random() * pokemonlist.results.length),
+    ]
+    setLeft(left)
+    setRight(right)
+  }, [pokemonlist])
 
-    if (isError) {
-        return <p>An error occured!</p>
+  if (isPending || (left === null && right === null)) {
+    return <p>Loading...</p>
+  }
+
+  if (isError) {
+    return <p>An error occured!</p>
+  }
+
+  const pokemonArray = pokemonlist.results.map((pokemon) => pokemon.name)
+
+  const handleClick = (side: string) => {
+    if (side === 'left') {
+      console.log('left')
+      const left: Array<number> = [
+        Math.floor(Math.random() * pokemonlist.results.length),
+      ]
+      setLeft(left)
     }
-    
-    const pokemonArray = pokemonlist.results.map((pokemon) => pokemon.name)
+    if (side === 'right') {
+      console.log('right')
+      const right: Array<number> = [
+        Math.floor(Math.random() * pokemonlist.results.length),
+      ]
+      setRight(right)
+    }
+  }
 
-   
-    return(
-        <>
-            <IndividualPokemon pokemonName={pokemonArray[indexes[0]]}/>
-            <IndividualPokemon pokemonName={pokemonArray[indexes[1]]}/>
-        </>
-
-        
-    )
+  return (
+    <>
+      <div className="pokemonContainer">
+        <button className="left" onClick={() => handleClick('left')}>
+          <IndividualPokemon pokemonName={pokemonArray[left[0]]} />
+        </button>
+        <h1>or</h1>
+        <button className="right" onClick={() => handleClick('right')}>
+          <IndividualPokemon pokemonName={pokemonArray[right[0]]} />
+        </button>
+      </div>
+    </>
+  )
 }
 
-
-// create function
-    // create query / handle api
-        // create array with images
-    // get random image function
-    // create a visible/not visible state
-    // handle click
-    
-    // create return
-        // create containers
-        // add reset button
-        // add images to containers
-            // make images clickable
